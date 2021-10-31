@@ -38,4 +38,57 @@
             <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
+    
+    <build>
+        <plugins>
+            <!--https://github.com/devlauer/plantuml-generator-->
+            <plugin>
+                <artifactId>plantuml-generator-maven-plugin</artifactId>
+                <groupId>de.elnarion.maven</groupId>
+                <version>1.1.2</version>
+                <executions>
+                    <execution>
+                        <id>generate-plantuml-diagram</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>generate-test-sources</phase>
+                        <configuration>
+                            <outputDirectory>${basedir}/doc/uml</outputDirectory>
+                            <outputFilename>${artifactId}-domain-plantuml-${project.version}.txt</outputFilename>
+                            <removeMethods>true</removeMethods>
+                            <scanPackages>
+                                <scanPackage>com.github.braully.domain</scanPackage>
+                            </scanPackages>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--https://github.com/Huluvu424242/plantuml-maven-plugin-->
+            <plugin>
+                <groupId>com.github.funthomas424242</groupId>
+                <artifactId>plantuml-maven-plugin</artifactId>
+                <version>1.5.2</version>
+                <configuration>
+                    <outputDirectory>${basedir}/doc/uml</outputDirectory>
+                    <truncatePattern>src/main/*</truncatePattern>
+                    <sourceFiles>
+                        <directory>${basedir}</directory>
+                        <includes>
+                            <include>src/main/plantuml/**/*.txt</include>
+                            <include>doc/uml/**/*.txt</include>
+                        </includes>
+                    </sourceFiles>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>net.sourceforge.plantuml</groupId>
+                        <artifactId>plantuml</artifactId>
+                        <version>1.2020.19</version>
+                        <scope>runtime</scope>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
 </project>
