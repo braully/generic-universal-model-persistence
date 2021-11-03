@@ -37,58 +37,107 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ch.raffael.markdown-doclet</groupId>
+            <artifactId>markdown-doclet</artifactId>
+            <version>1.4</version>
+        </dependency>
     </dependencies>
-    
-    <build>
-        <plugins>
-            <!--https://github.com/devlauer/plantuml-generator-->
-            <plugin>
-                <artifactId>plantuml-generator-maven-plugin</artifactId>
-                <groupId>de.elnarion.maven</groupId>
-                <version>1.1.2</version>
-                <executions>
-                    <execution>
-                        <id>generate-plantuml-diagram</id>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <phase>generate-test-sources</phase>
+    <profiles>
+        <profile>
+            <id>uml</id>
+            <build>
+                <plugins>
+                    <!--https://github.com/devlauer/plantuml-generator-->
+                    <plugin>
+                        <artifactId>plantuml-generator-maven-plugin</artifactId>
+                        <groupId>de.elnarion.maven</groupId>
+                        <version>1.1.2</version>
+                        <executions>
+                            <execution>
+                                <id>generate-plantuml-diagram</id>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <phase>compile</phase>
+                            </execution>
+                        </executions>
                         <configuration>
                             <outputDirectory>${basedir}/doc/uml</outputDirectory>
                             <outputFilename>${artifactId}-domain-plantuml-${project.version}.txt</outputFilename>
                             <removeMethods>true</removeMethods>
+                            <addJPAAnnotations>true</addJPAAnnotations>
                             <scanPackages>
                                 <scanPackage>com.github.braully.domain</scanPackage>
                             </scanPackages>
                         </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!--https://github.com/Huluvu424242/plantuml-maven-plugin-->
+                    </plugin>
+                    <!--https://github.com/Huluvu424242/plantuml-maven-plugin-->
+                    <plugin>
+                        <groupId>com.github.funthomas424242</groupId>
+                        <artifactId>plantuml-maven-plugin</artifactId>
+                        <version>1.5.2</version>
+                        <executions>
+                            <execution>
+                                <id>generate-plantuml-diagram</id>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <phase>compile</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <outputDirectory>${basedir}/doc/uml</outputDirectory>
+                            <sourceFiles>
+                                <directory>${basedir}</directory>
+                                <includes>
+                                    <include>src/main/plantuml/**/*.txt</include>
+                                    <include>doc/uml/**/*.txt</include>
+                                </includes>
+                            </sourceFiles>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>net.sourceforge.plantuml</groupId>
+                                <artifactId>plantuml</artifactId>
+                                <version>1.2020.19</version>
+                                <scope>runtime</scope>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    
+    <build>
+        <plugins>
+            <!--https://github.com/Abnaxos/markdown-doclet-->
             <plugin>
-                <groupId>com.github.funthomas424242</groupId>
-                <artifactId>plantuml-maven-plugin</artifactId>
-                <version>1.5.2</version>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9</version>
                 <configuration>
-                    <outputDirectory>${basedir}/doc/uml</outputDirectory>
-                    <truncatePattern>src/main/*</truncatePattern>
-                    <sourceFiles>
-                        <directory>${basedir}</directory>
-                        <includes>
-                            <include>src/main/plantuml/**/*.txt</include>
-                            <include>doc/uml/**/*.txt</include>
-                        </includes>
-                    </sourceFiles>
+                    <doclet>ch.raffael.mddoclet.MarkdownDoclet</doclet>
+                    <docletArtifact>
+                        <groupId>ch.raffael.markdown-doclet</groupId>
+                        <artifactId>markdown-doclet</artifactId>
+                        <version>1.4</version>
+                    </docletArtifact>
+                    <useStandardDocletOptions>true</useStandardDocletOptions>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>net.sourceforge.plantuml</groupId>
-                        <artifactId>plantuml</artifactId>
-                        <version>1.2020.19</version>
-                        <scope>runtime</scope>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>
+    <repositories>
+        <repository>
+            <id>repo.jenkins-ci.org</id>
+            <url>https://repo.jenkins-ci.org/public/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>repo.jenkins-ci.org</id>
+            <url>https://repo.jenkins-ci.org/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
 </project>
