@@ -6,7 +6,14 @@ package com.github.braully.domain;
  */
 public enum UnitMeasurement {
 
-    UNITY("Unity"), KG("Kg"), MT("Meter"), HR("Hour");
+    UNITY("Unity"),
+    HR("Hour"),
+    KG("Kg"), MT("Meter"),
+    LB, POL;
+
+    private UnitMeasurement() {
+        this.descricao = name();
+    }
 
     UnitMeasurement(String descricao) {
         this.descricao = descricao;

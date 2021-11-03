@@ -19,54 +19,58 @@ package com.github.braully.domain;
 
 import java.util.Calendar;
 import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
  * @author braully
  */
+@Getter
+@Setter
 public class FinancialPeriod implements Comparable<FinancialPeriod> {
 
-    protected int mes;
+    protected int month;
 
-    protected int ano;
+    protected int year;
 
-    protected int indice;
+    protected int index;
 
     public FinancialPeriod(Date data) {
         if (data != null) {
             Calendar c = Calendar.getInstance();
             c.setTime(data);
-            mes = c.get(Calendar.MONTH);
-            ano = c.get(Calendar.YEAR);
+            month = c.get(Calendar.MONTH);
+            year = c.get(Calendar.YEAR);
         }
     }
 
     public FinancialPeriod(int mes, int ano) {
-        this.mes = mes;
-        this.ano = ano;
+        this.month = mes;
+        this.year = ano;
     }
 
     public int getMes() {
-        return mes;
+        return month;
     }
 
     public void setMes(int mes) {
-        this.mes = mes;
+        this.month = mes;
     }
 
     public int getAno() {
-        return ano;
+        return year;
     }
 
     public void setAno(int ano) {
-        this.ano = ano;
+        this.year = ano;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + this.mes;
-        hash = 53 * hash + this.ano;
+        hash = 53 * hash + this.month;
+        hash = 53 * hash + this.year;
         return hash;
     }
 
@@ -79,10 +83,10 @@ public class FinancialPeriod implements Comparable<FinancialPeriod> {
             return false;
         }
         final FinancialPeriod other = (FinancialPeriod) obj;
-        if (this.mes != other.mes) {
+        if (this.month != other.month) {
             return false;
         }
-        if (this.ano != other.ano) {
+        if (this.year != other.year) {
             return false;
         }
         return true;
@@ -90,16 +94,16 @@ public class FinancialPeriod implements Comparable<FinancialPeriod> {
 
     @Override
     public String toString() {
-        return mes + "/" + ano;
+        return month + "/" + year;
     }
 
     @Override
     public int compareTo(FinancialPeriod o) {
         int ret = 0;
         if (o != null) {
-            ret = this.ano - o.ano;
+            ret = this.year - o.year;
             if (ret == 0) {
-                ret = this.mes - o.mes;
+                ret = this.month - o.month;
             }
         }
         return ret;
@@ -107,17 +111,17 @@ public class FinancialPeriod implements Comparable<FinancialPeriod> {
 
     public String getDescricaoFormatada() {
         StringBuilder sb = new StringBuilder();
-        sb.append(mes);
+        sb.append(month);
         sb.append("/");
-        sb.append(ano);
+        sb.append(year);
         return sb.toString();
     }
 
     public int getIndice() {
-        return indice;
+        return index;
     }
 
     public void setIndice(int indice) {
-        this.indice = indice;
+        this.index = indice;
     }
 }

@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public enum TypePeriodInterest {
 //TODO: Translate and unify and Merge in TypePeriod
-    DIARIO("Dia", "por Dia"), MENSAL("Mês", "por Mês"), ANUAL("Ano", "por Ano");
+    DAY("Day", "by Day"), MONTH("Month", "by Month"), YEAR("Ano", "by Year");
 
     protected final String name;
     protected final String label;
@@ -39,13 +39,13 @@ public enum TypePeriodInterest {
     public long calcularDiferencaPeriodo(Date dateFim, Date dataIni) {
         long ret = 0;
         switch (this) {
-            case ANUAL:
+            case YEAR:
                 ret = UtilDate.diferencaAno(dateFim, dataIni);
                 break;
-            case MENSAL:
+            case MONTH:
                 ret = UtilDate.diferencaMes(dateFim, dataIni);
                 break;
-            case DIARIO:
+            case DAY:
                 ret = UtilDate.diferencaDia(dateFim, dataIni);
                 break;
         }
