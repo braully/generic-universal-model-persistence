@@ -1,0 +1,724 @@
+@startuml
+
+abstract class com.github.braully.domain.AbstractAuditableEntity {
+	{field} +lastModified : java.util.Date
+	{field} +userIdModified : Long
+}
+
+
+abstract class com.github.braully.domain.AbstractEntity {
+	{field} +id : Long
+	{field} +lastModifiedDate : java.util.Date
+	{field} +lastModifiedUser : Long
+	{field} +removed : Boolean
+}
+
+
+abstract class com.github.braully.domain.AbstractExpirableEntity {
+	{field} +dateBegin : java.util.Date
+	{field} +dateEnd : java.util.Date
+}
+
+
+abstract class com.github.braully.domain.AbstractGlobalEntity {
+	{field} +id : Long
+	{field} +uniqueCode : String
+}
+
+
+abstract class com.github.braully.domain.AbstractLightRemoveEntity {
+	{field} +removed : Boolean
+}
+
+
+abstract class com.github.braully.domain.AbstractMigrableEntity {
+	{field} +uniqueCode : String
+}
+
+
+abstract class com.github.braully.domain.AbstractSimpleEntity {
+	{field} +id : Long
+}
+
+
+abstract class com.github.braully.domain.AbstractStatusEntity {
+	{field} +status : Integer
+}
+
+
+abstract class com.github.braully.domain.AbstractSystemEntity {
+	{field} +id : Long
+	{field} +systemLock : Boolean
+}
+
+
+class com.github.braully.domain.Account {
+	{field} +description : String
+	{field} +groupingGL : String
+	{field} +name : String
+	{field} +systemLock : Boolean
+}
+
+
+enum com.github.braully.domain.Account$AccountType {
+	{field} +Credit
+	{field} +Debit
+}
+
+
+class com.github.braully.domain.AccountTransaction {
+	{field} {static} +CURRENCY_DEFAULT : javax.money.CurrencyUnit
+	{field} +actualBalance : java.math.BigDecimal
+	{field} +creditTotal : java.math.BigDecimal
+	{field} +dateExecuted : java.util.Date
+	{field} +datePrevist : java.util.Date
+	{field} +debitTotal : java.math.BigDecimal
+	{field} +memo : String
+	{field} +observation : String
+	{field} +status : String
+	{field} +total : javax.money.MonetaryAmount
+	{field} +typeMethod : String
+	{field} +typeOperation : String
+	{field} +typeTransaction : String
+	{field} +valueExecuted : java.math.BigDecimal
+}
+
+
+class com.github.braully.domain.Address {
+	{field} +addressLine1 : String
+	{field} +addressLine2 : String
+	{field} +district : String
+	{field} +number : String
+	{field} +street : String
+	{field} +zip : String
+}
+
+
+class com.github.braully.domain.App {
+	{field} +name : String
+	{field} +url : String
+	{field} +ver : String
+}
+
+
+class com.github.braully.domain.Bank {
+	{field} +name : String
+	{field} +number : String
+	{field} {static} #serialVersionUID : long
+}
+
+
+class com.github.braully.domain.BinaryFile {
+	{field} +date : java.util.Date
+	{field} +description : String
+	{field} +fileBinary : [B
+	{field} +md5 : String
+	{field} +name : String
+	{field} +pathCloud : String
+	{field} +pathLocal : String
+	{field} +pathLog : String
+	{field} +subtype : String
+	{field} +type : String
+}
+
+
+class com.github.braully.domain.Brand {
+	{field} +description : String
+	{field} +name : String
+}
+
+
+class com.github.braully.domain.Budget {
+	{field} +percent : Double
+	{field} +total : java.math.BigDecimal
+	{field} +typePeriod : String
+	{field} +typePeriodConsolidation : String
+}
+
+
+class com.github.braully.domain.Bug {
+	{field} +dateCreated : java.util.Date
+	{field} +dateEnd : java.util.Date
+	{field} +description : String
+	{field} +numRedMine : String
+}
+
+
+class com.github.braully.domain.CacheTemporayAtrribute {
+	{field} ~map : java.util.Map
+}
+
+
+class com.github.braully.domain.City {
+	{field} +country : String
+	{field} +name : String
+	{field} +phoneticName : String
+	{field} +state : String
+}
+
+
+class com.github.braully.domain.Contact {
+}
+
+
+class com.github.braully.domain.Email {
+	{field} +type : String
+	{field} +value : String
+}
+
+
+class com.github.braully.domain.EmploymentContract {
+	{field} +endDate : java.util.Date
+	{field} +salarayPeriod : java.math.BigDecimal
+	{field} +startDate : java.util.Date
+	{field} +value : Integer
+}
+
+
+class com.github.braully.domain.EntityDummy {
+	{field} +checked : Boolean
+	{field} +code : Integer
+	{field} +date : java.util.Date
+	{field} +decimal : java.math.BigDecimal
+	{field} +fraction : Double
+	{field} +name : String
+}
+
+
+class com.github.braully.domain.EntityOperation {
+	{field} +classe : String
+	{field} +countCreate : Integer
+	{field} +countDelete : Integer
+	{field} +countRead : Integer
+	{field} +countUpdate : Integer
+}
+
+
+class com.github.braully.domain.EntityOperationDetail {
+	{field} +classe : String
+	{field} +count : Integer
+	{field} +operation : String
+}
+
+
+enum com.github.braully.domain.FactorType {
+	{field} +Pecentage (%)
+	{field} +Value $
+}
+
+
+class com.github.braully.domain.FinancialAccount {
+	{field} +agency : String
+	{field} +codOfx : String
+	{field} +description : String
+	{field} +name : String
+	{field} +number : String
+	{field} +type : String
+}
+
+
+class com.github.braully.domain.FinancialCharge {
+	{field} +description : String
+	{field} +factorInterestRating : Long
+	{field} +factorTrafficTicket : Long
+	{field} +instructions : String
+}
+
+
+class com.github.braully.domain.FinancialPeriod {
+	{field} +index : int
+	{field} +month : int
+	{field} +year : int
+}
+
+
+class com.github.braully.domain.GenericType {
+	{field} +attribute : String
+	{field} +grouping : String
+	{field} +type : String
+}
+
+
+class com.github.braully.domain.GenericValue {
+	{field} +intValue : Long
+	{field} +stringValue : String
+}
+
+
+class com.github.braully.domain.Host {
+	{field} +description : String
+	{field} +macAddress : String
+}
+
+
+interface com.github.braully.domain.IFormatable {
+}
+
+
+interface com.github.braully.domain.INameComparable {
+}
+
+
+interface com.github.braully.domain.IOrganiztionEntityDependent {
+}
+
+
+interface com.github.braully.domain.ISystemEntity {
+}
+
+
+class com.github.braully.domain.InfoExtra {
+	{field} +simpleNumberValues : java.util.Map
+	{field} +simpleStringValues : java.util.Map
+}
+
+
+class com.github.braully.domain.Inventory {
+	{field} +description : String
+	{field} +localization : String
+	{field} +name : String
+	{field} +type : String
+}
+
+
+class com.github.braully.domain.InventoryItem {
+	{field} +name : String
+	{field} +quantity : String
+	{field} +type : String
+}
+
+
+class com.github.braully.domain.InventoryItemTransaction {
+	{field} +actualBalance : java.math.BigDecimal
+	{field} +quantity : Long
+	{field} +scaleQuantity : Long
+}
+
+
+class com.github.braully.domain.LocaleSupported {
+	{field} +country : String
+	{field} +currency : String
+	{field} +language : String
+	{field} +variant : String
+}
+
+
+class com.github.braully.domain.LogEntryError {
+	{field} +app : String
+	{field} +date : java.util.Date
+	{field} +file : String
+	{field} +level : String
+	{field} +location : String
+	{field} +message : String
+	{field} +revision : Integer
+	{field} +throwable : String
+	{field} +ver : String
+}
+
+
+class com.github.braully.domain.LogEntryErrorView {
+	{field} +app : String
+	{field} +countOccurrence : int
+	{field} +greatVersion : String
+	{field} +id : int
+	{field} +lastOccurrence : java.util.Date
+	{field} +lastRevision : Long
+	{field} +location : String
+}
+
+
+class com.github.braully.domain.Menu {
+	{field} +icon : String
+	{field} +link : String
+	{field} +name : String
+	{field} +sortIndex : Integer
+	{field} +value : String
+}
+
+
+class com.github.braully.domain.Money {
+	{field} {static} +DEFAULT_CURRENCY : javax.money.CurrencyUnit
+	{field} {static} +DEFAULT_FORMAT : java.text.DecimalFormat
+	{field} {static} +FATOR_UNIDADE : long
+	{field} {static} +REGIAO : java.util.Locale
+	{field} #delegate : javax.money.MonetaryAmount
+	{field} #value : long
+}
+
+
+class com.github.braully.domain.Organization {
+	{field} +description : String
+	{field} +fiscalCode : String
+	{field} +name : String
+	{field} +oficialName : String
+}
+
+
+class com.github.braully.domain.OrganizationRole {
+}
+
+
+class com.github.braully.domain.Partner {
+	{field} +attribute : String
+	{field} +birthDate : java.util.Date
+	{field} +fiscalCode : String
+	{field} +name : String
+	{field} +phoneticName : String
+	{field} +removed : Boolean
+	{field} +uniqueCode : String
+}
+
+
+class com.github.braully.domain.PartnerGroup {
+	{field} #description : String
+	{field} #name : String
+	{field} #type : String
+}
+
+
+class com.github.braully.domain.PartnerPartner {
+	{field} +type : String
+}
+
+
+class com.github.braully.domain.PartnerPartnerPK {
+	{field} +id : Long
+	{field} +partnerSource : Long
+	{field} +partnerTarget : Long
+}
+
+
+class com.github.braully.domain.Payment {
+	{field} +amountDiscount : java.math.BigDecimal
+	{field} +amountDiscountExtra : java.math.BigDecimal
+	{field} +amountOriginal : java.math.BigDecimal
+	{field} +descriptionDiscount : String
+	{field} +descriptionDiscountExtra : String
+}
+
+
+class com.github.braully.domain.Phone {
+	{field} +number : String
+	{field} +observation : String
+	{field} +type : String
+}
+
+
+class com.github.braully.domain.Product {
+	{field} +name : String
+	{field} +scaleUnit : Long
+	{field} +typeProduct : String
+	{field} +typeUnit : String
+	{field} +unit : Long
+}
+
+
+class com.github.braully.domain.ProductPrice {
+	{field} +basePrice : java.math.BigDecimal
+	{field} +charge : java.math.BigDecimal
+	{field} +description : String
+	{field} +fixedPrice : java.math.BigDecimal
+	{field} +profitPercent : Double
+	{field} +taxPercent : Double
+}
+
+
+class com.github.braully.domain.PurchaseOrder {
+	{field} +dateExpire : java.util.Date
+	{field} +dateOrder : java.util.Date
+	{field} +description : String
+	{field} +invoiceFiscalCode : String
+	{field} +statusType : String
+	{field} +total : java.math.BigDecimal
+	{field} +type : String
+}
+
+
+class com.github.braully.domain.PurchaseOrderItem {
+	{field} +attribute : String
+	{field} +observation : String
+	{field} +priceUnit : java.math.BigDecimal
+	{field} +quantity : Double
+}
+
+
+class com.github.braully.domain.ReportTemplate {
+	{field} +classeStatica : String
+	{field} +created : java.util.Date
+	{field} +description : String
+	{field} +localPath : String
+	{field} +name : String
+	{field} +report : [B
+	{field} +statico : boolean
+}
+
+
+class com.github.braully.domain.Role {
+	{field} +description : String
+	{field} +name : String
+}
+
+
+enum com.github.braully.domain.StatusBug {
+	{field} +CANCELED
+	{field} +OPEN
+	{field} +REPORTED
+	{field} +SOLVED
+}
+
+
+enum com.github.braully.domain.StatusExecutionCycle {
+	{field} +BLOCKED
+	{field} +CANCELED
+	{field} +DONE
+	{field} +READY
+	{field} +RUNNING
+}
+
+
+enum com.github.braully.domain.SysRole {
+	{field} +ADM
+	{field} +MNG
+	{field} +USER
+}
+
+
+class com.github.braully.domain.TagItem {
+	{field} +name : String
+}
+
+
+class com.github.braully.domain.Task {
+	{field} +date : java.util.Date
+	{field} +description : String
+	{field} +finish : java.util.Date
+	{field} +name : String
+}
+
+
+enum com.github.braully.domain.TransactionSituation {
+	{field} +CANCELED
+	{field} +EXECUTED
+	{field} +EXPIRED
+	{field} +PENDING
+	{field} +Paid Out
+	{field} +RECEIVED
+}
+
+
+enum com.github.braully.domain.TypePeriod {
+	{field} +BIMONTHLY
+	{field} +DAILY
+	{field} +HOURLY
+	{field} +MONTHLY
+	{field} +QUARTERLY
+	{field} +SEMESTER
+	{field} +YEARLY
+}
+
+
+class com.github.braully.domain.TypePeriod$1 {
+	{field} {static} ~$SwitchMap$com$github$braully$domain$TypePeriod : [I
+}
+
+
+enum com.github.braully.domain.UnitMeasurement {
+	{field} +Hour
+	{field} +Kg
+	{field} +LB
+	{field} +Meter
+	{field} +POL
+	{field} +Unity
+}
+
+
+class com.github.braully.domain.UserLogin {
+	{field} +active : Boolean
+	{field} +email : String
+	{field} +lastLogin : java.util.Date
+	{field} +password : String
+	{field} +passwordType : String
+	{field} +userName : String
+}
+
+
+class com.github.braully.domain.UserLoginPartner {
+}
+
+
+class com.github.braully.domain.UserMessage {
+	{field} +date : java.util.Date
+	{field} +dateView : java.util.Date
+	{field} +message : String
+	{field} +title : String
+}
+
+
+
+
+com.github.braully.domain.AbstractAuditableEntity --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.AbstractEntity -->  com.github.braully.domain.CacheTemporayAtrribute : cache
+com.github.braully.domain.AbstractExpirableEntity --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.AbstractLightRemoveEntity --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.AbstractMigrableEntity --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.AbstractSimpleEntity -->  com.github.braully.domain.CacheTemporayAtrribute : cache
+com.github.braully.domain.AbstractStatusEntity --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.AbstractSystemEntity --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.AbstractSystemEntity ..|>  com.github.braully.domain.ISystemEntity
+com.github.braully.domain.Account -->  com.github.braully.domain.Account : parentAccount
+com.github.braully.domain.Account -->  com.github.braully.domain.Account$AccountType : typeGL
+com.github.braully.domain.Account --|>  com.github.braully.domain.AbstractMigrableEntity
+com.github.braully.domain.Account ..|>  com.github.braully.domain.ISystemEntity
+com.github.braully.domain.AccountTransaction "1" o-- "0..*"  com.github.braully.domain.AccountTransaction : childTransactions
+com.github.braully.domain.AccountTransaction -->  com.github.braully.domain.Account : account
+com.github.braully.domain.AccountTransaction -->  com.github.braully.domain.AccountTransaction : parentTransaction
+com.github.braully.domain.AccountTransaction -->  com.github.braully.domain.FinancialAccount : financialAccount
+com.github.braully.domain.AccountTransaction -->  com.github.braully.domain.InfoExtra : infoExtra
+com.github.braully.domain.AccountTransaction -->  com.github.braully.domain.Partner : partner
+com.github.braully.domain.AccountTransaction -->  com.github.braully.domain.TransactionSituation : situation
+com.github.braully.domain.AccountTransaction --|>  com.github.braully.domain.AbstractMigrableEntity
+com.github.braully.domain.AccountTransaction ..|>  com.github.braully.domain.IOrganiztionEntityDependent
+com.github.braully.domain.Address -->  com.github.braully.domain.City : city
+com.github.braully.domain.Address --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.Address ..|>  com.github.braully.domain.IFormatable
+com.github.braully.domain.App --|>  com.github.braully.domain.AbstractStatusEntity
+com.github.braully.domain.Bank --|>  com.github.braully.domain.AbstractMigrableEntity
+com.github.braully.domain.BinaryFile -->  com.github.braully.domain.InfoExtra : infoExtra
+com.github.braully.domain.BinaryFile -->  com.github.braully.domain.Organization : organization
+com.github.braully.domain.BinaryFile -->  com.github.braully.domain.StatusExecutionCycle : statusExecution
+com.github.braully.domain.BinaryFile -->  com.github.braully.domain.UserLogin : userLogin
+com.github.braully.domain.BinaryFile --|>  com.github.braully.domain.AbstractStatusEntity
+com.github.braully.domain.Brand --|>  com.github.braully.domain.AbstractStatusEntity
+com.github.braully.domain.Budget -->  com.github.braully.domain.Account : account
+com.github.braully.domain.Budget --|>  com.github.braully.domain.AbstractExpirableEntity
+com.github.braully.domain.Bug "1" o-- "0..*"  com.github.braully.domain.LogEntryError : messages
+com.github.braully.domain.Bug -->  com.github.braully.domain.App : app
+com.github.braully.domain.Bug -->  com.github.braully.domain.Bug : parent
+com.github.braully.domain.Bug -->  com.github.braully.domain.LogEntryErrorView : viewLog
+com.github.braully.domain.Bug -->  com.github.braully.domain.StatusBug : statusBug
+com.github.braully.domain.Bug -->  com.github.braully.domain.Task : task
+com.github.braully.domain.Bug --|>  com.github.braully.domain.AbstractStatusEntity
+com.github.braully.domain.City --|>  com.github.braully.domain.AbstractGlobalEntity
+com.github.braully.domain.City ..|>  com.github.braully.domain.IFormatable
+com.github.braully.domain.Contact "1" o-- "0..*"  com.github.braully.domain.Address : extraAddresses
+com.github.braully.domain.Contact "1" o-- "0..*"  com.github.braully.domain.Email : extraEmails
+com.github.braully.domain.Contact "1" o-- "0..*"  com.github.braully.domain.Phone : extraPhones
+com.github.braully.domain.Contact -->  com.github.braully.domain.Address : mainAddress
+com.github.braully.domain.Contact -->  com.github.braully.domain.Email : mainEmail
+com.github.braully.domain.Contact -->  com.github.braully.domain.Phone : mainPhone
+com.github.braully.domain.Contact --|>  com.github.braully.domain.AbstractGlobalEntity
+com.github.braully.domain.Email --|>  com.github.braully.domain.AbstractLightRemoveEntity
+com.github.braully.domain.EmploymentContract -->  com.github.braully.domain.GenericType : function
+com.github.braully.domain.EmploymentContract -->  com.github.braully.domain.Organization : organization
+com.github.braully.domain.EmploymentContract -->  com.github.braully.domain.Partner : employee
+com.github.braully.domain.EmploymentContract -->  com.github.braully.domain.Role : role
+com.github.braully.domain.EmploymentContract -->  com.github.braully.domain.TypePeriod : period
+com.github.braully.domain.EmploymentContract --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.EmploymentContract ..|>  com.github.braully.domain.IOrganiztionEntityDependent
+com.github.braully.domain.EntityDummy "1" o-- "0..*"  com.github.braully.domain.EntityDummy : childrens
+com.github.braully.domain.EntityDummy -->  com.github.braully.domain.EntityDummy : parent
+com.github.braully.domain.EntityDummy --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.EntityOperation -->  com.github.braully.domain.UserLogin : userLogin
+com.github.braully.domain.EntityOperation --|>  com.github.braully.domain.AbstractSimpleEntity
+com.github.braully.domain.EntityOperationDetail -->  com.github.braully.domain.UserLogin : userLogin
+com.github.braully.domain.EntityOperationDetail --|>  com.github.braully.domain.AbstractSimpleEntity
+com.github.braully.domain.FinancialAccount -->  com.github.braully.domain.Bank : bank
+com.github.braully.domain.FinancialAccount -->  com.github.braully.domain.FinancialAccount : parentAccount
+com.github.braully.domain.FinancialAccount -->  com.github.braully.domain.Organization : organization
+com.github.braully.domain.FinancialAccount --|>  com.github.braully.domain.AbstractMigrableEntity
+com.github.braully.domain.FinancialAccount ..|>  com.github.braully.domain.IOrganiztionEntityDependent
+com.github.braully.domain.FinancialCharge -->  com.github.braully.domain.FactorType : typeFactorInterestRating
+com.github.braully.domain.FinancialCharge -->  com.github.braully.domain.FactorType : typeFactorTrafficTicket
+com.github.braully.domain.FinancialCharge -->  com.github.braully.domain.TypePeriod : typePeriodInterest
+com.github.braully.domain.FinancialCharge --|>  com.github.braully.domain.AbstractStatusEntity
+com.github.braully.domain.GenericType --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.GenericValue -->  com.github.braully.domain.GenericType : genericType
+com.github.braully.domain.GenericValue --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.Host --|>  com.github.braully.domain.AbstractStatusEntity
+com.github.braully.domain.InfoExtra "1" o-- "0..*"  com.github.braully.domain.GenericValue : genericValues
+com.github.braully.domain.InfoExtra --|>  com.github.braully.domain.AbstractGlobalEntity
+com.github.braully.domain.Inventory -->  com.github.braully.domain.Organization : organization
+com.github.braully.domain.Inventory --|>  com.github.braully.domain.AbstractGlobalEntity
+com.github.braully.domain.Inventory ..|>  com.github.braully.domain.IOrganiztionEntityDependent
+com.github.braully.domain.InventoryItem -->  com.github.braully.domain.Inventory : inventory
+com.github.braully.domain.InventoryItem -->  com.github.braully.domain.Partner : supplier
+com.github.braully.domain.InventoryItem -->  com.github.braully.domain.Product : product
+com.github.braully.domain.InventoryItem --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.InventoryItemTransaction -->  com.github.braully.domain.Inventory : inventory
+com.github.braully.domain.InventoryItemTransaction -->  com.github.braully.domain.InventoryItem : inventoryItem
+com.github.braully.domain.InventoryItemTransaction --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.LocaleSupported --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.LogEntryError --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.Menu "1" o-- "0..*"  com.github.braully.domain.Menu : childs
+com.github.braully.domain.Menu -->  com.github.braully.domain.Menu : parent
+com.github.braully.domain.Menu --|>  com.github.braully.domain.AbstractLightRemoveEntity
+com.github.braully.domain.Organization -->  com.github.braully.domain.BinaryFile : logo
+com.github.braully.domain.Organization -->  com.github.braully.domain.Contact : contact
+com.github.braully.domain.Organization -->  com.github.braully.domain.Organization : parent
+com.github.braully.domain.Organization --|>  com.github.braully.domain.AbstractGlobalEntity
+com.github.braully.domain.Organization ..|>  com.github.braully.domain.INameComparable
+com.github.braully.domain.OrganizationRole -->  com.github.braully.domain.Organization : organization
+com.github.braully.domain.OrganizationRole -->  com.github.braully.domain.Role : role
+com.github.braully.domain.OrganizationRole --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.Partner "1" o-- "0..*"  com.github.braully.domain.PartnerPartner : partners
+com.github.braully.domain.Partner -->  com.github.braully.domain.City : birthCity
+com.github.braully.domain.Partner -->  com.github.braully.domain.Contact : contact
+com.github.braully.domain.Partner -->  com.github.braully.domain.InfoExtra : infoExtra
+com.github.braully.domain.Partner --|>  com.github.braully.domain.AbstractGlobalEntity
+com.github.braully.domain.Partner ..|>  com.github.braully.domain.INameComparable
+com.github.braully.domain.PartnerGroup "1" o-- "0..*"  com.github.braully.domain.Partner : partners
+com.github.braully.domain.PartnerGroup --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.PartnerPartner -->  com.github.braully.domain.Partner : partnerSource
+com.github.braully.domain.PartnerPartner -->  com.github.braully.domain.Partner : partnerTarget
+com.github.braully.domain.PartnerPartner --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.Payment -->  com.github.braully.domain.AccountTransaction : accountTransaction
+com.github.braully.domain.Payment --|>  com.github.braully.domain.AbstractAuditableEntity
+com.github.braully.domain.Phone --|>  com.github.braully.domain.AbstractLightRemoveEntity
+com.github.braully.domain.Product -->  com.github.braully.domain.Partner : manufacturer
+com.github.braully.domain.Product --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.ProductPrice -->  com.github.braully.domain.Inventory : inventory
+com.github.braully.domain.ProductPrice -->  com.github.braully.domain.Organization : organization
+com.github.braully.domain.ProductPrice -->  com.github.braully.domain.Product : product
+com.github.braully.domain.ProductPrice --|>  com.github.braully.domain.AbstractExpirableEntity
+com.github.braully.domain.PurchaseOrder "1" o-- "0..*"  com.github.braully.domain.PurchaseOrderItem : itens
+com.github.braully.domain.PurchaseOrder -->  com.github.braully.domain.AccountTransaction : accountTransaction
+com.github.braully.domain.PurchaseOrder -->  com.github.braully.domain.BinaryFile : contract
+com.github.braully.domain.PurchaseOrder -->  com.github.braully.domain.InfoExtra : infoExtra
+com.github.braully.domain.PurchaseOrder -->  com.github.braully.domain.Inventory : inventory
+com.github.braully.domain.PurchaseOrder -->  com.github.braully.domain.Organization : organization
+com.github.braully.domain.PurchaseOrder -->  com.github.braully.domain.Partner : partner
+com.github.braully.domain.PurchaseOrder --|>  com.github.braully.domain.AbstractAuditableEntity
+com.github.braully.domain.PurchaseOrder ..|>  com.github.braully.domain.IOrganiztionEntityDependent
+com.github.braully.domain.PurchaseOrderItem -->  com.github.braully.domain.PurchaseOrder : purchaseOrder
+com.github.braully.domain.PurchaseOrderItem --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.ReportTemplate --|>  com.github.braully.domain.AbstractStatusEntity
+com.github.braully.domain.Role "1" o-- "0..*"  com.github.braully.domain.Menu : menus
+com.github.braully.domain.Role "1" o-- "0..*"  com.github.braully.domain.Role : childs
+com.github.braully.domain.Role -->  com.github.braully.domain.Role : parent
+com.github.braully.domain.Role -->  com.github.braully.domain.SysRole : sysRole
+com.github.braully.domain.Role --|>  com.github.braully.domain.AbstractGlobalEntity
+com.github.braully.domain.TagItem "1" o-- "0..*"  com.github.braully.domain.TagItem : childs
+com.github.braully.domain.TagItem -->  com.github.braully.domain.TagItem : parent
+com.github.braully.domain.TagItem --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.Task "1" o-- "0..*"  com.github.braully.domain.TagItem : tags
+com.github.braully.domain.Task "1" o-- "0..*"  com.github.braully.domain.Task : childrens
+com.github.braully.domain.Task -->  com.github.braully.domain.Partner : partnerExecutor
+com.github.braully.domain.Task -->  com.github.braully.domain.Partner : partnerInterested
+com.github.braully.domain.Task -->  com.github.braully.domain.StatusExecutionCycle : statusExecution
+com.github.braully.domain.Task -->  com.github.braully.domain.Task : next
+com.github.braully.domain.Task -->  com.github.braully.domain.Task : parent
+com.github.braully.domain.Task --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.UserLogin "1" o-- "0..*"  com.github.braully.domain.Menu : menus
+com.github.braully.domain.UserLogin "1" o-- "0..*"  com.github.braully.domain.OrganizationRole : organizationRole
+com.github.braully.domain.UserLogin "1" o-- "0..*"  com.github.braully.domain.Role : roles
+com.github.braully.domain.UserLogin -->  com.github.braully.domain.SysRole : sysRole
+com.github.braully.domain.UserLogin --|>  com.github.braully.domain.AbstractGlobalEntity
+com.github.braully.domain.UserLoginPartner -->  com.github.braully.domain.Partner : partner
+com.github.braully.domain.UserLoginPartner -->  com.github.braully.domain.UserLogin : userLogin
+com.github.braully.domain.UserLoginPartner --|>  com.github.braully.domain.AbstractEntity
+com.github.braully.domain.UserMessage -->  com.github.braully.domain.UserLogin : userFrom
+com.github.braully.domain.UserMessage -->  com.github.braully.domain.UserLogin : userTo
+com.github.braully.domain.UserMessage --|>  com.github.braully.domain.AbstractLightRemoveEntity
+
+
+@enduml
