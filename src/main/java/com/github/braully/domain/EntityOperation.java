@@ -32,7 +32,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(schema = "base")
-public class EntityOperation extends AbstractEntity {
+public class EntityOperation extends AbstractSimpleEntity {
 
     @Basic
     protected String classe;

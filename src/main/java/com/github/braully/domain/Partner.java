@@ -38,7 +38,7 @@ import org.hibernate.annotations.Where;
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.INTEGER, name = "type_id", columnDefinition = "smallint default '0'", length = 1)
 @Where(clause = "removed = false") // jpa hibernate soft delete
 @DiscriminatorValue("0")
-public class Partner extends AbstractEntity
+public class Partner extends AbstractGlobalEntity
         implements Serializable, IMigrableEntity, INameComparable, ILightRemoveEntity {
 
     @Basic(optional = false)

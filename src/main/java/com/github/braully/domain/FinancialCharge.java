@@ -49,7 +49,7 @@ public class FinancialCharge extends AbstractStatusEntity {
     protected Long factorTrafficTicket;
     @Enumerated(EnumType.ORDINAL)
     @Basic
-    protected TypePeriodInterest typePeriodInterest;
+    protected TypePeriod typePeriodInterest;
     @Enumerated(EnumType.ORDINAL)
     @Basic
     protected FactorType typeFactorInterestRating;
@@ -104,11 +104,11 @@ public class FinancialCharge extends AbstractStatusEntity {
         this.typeFactorInterestRating = typeFactorInterestRating;
     }
 
-    public TypePeriodInterest getTypePeriodInterest() {
+    public TypePeriod getTypePeriodInterest() {
         return typePeriodInterest;
     }
 
-    public void setTypePeriodInterest(TypePeriodInterest typePeriodInterest) {
+    public void setTypePeriodInterest(TypePeriod typePeriodInterest) {
         this.typePeriodInterest = typePeriodInterest;
     }
 
@@ -133,7 +133,7 @@ public class FinancialCharge extends AbstractStatusEntity {
         return this.typeFactorInterestRating;
     }
 
-    public TypePeriodInterest getTipoPeriodoJuros() {
+    public TypePeriod getTipoPeriodoJuros() {
         return this.typePeriodInterest;
     }
 }

@@ -45,7 +45,7 @@ public class Task extends AbstractEntity {
     protected Task next;
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(schema = "base", name = "task_tag")
-    protected Set<Tag> tags;
+    protected Set<TagItem> tags;
     @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
     protected Set<Task> childrens;
 

@@ -1,28 +1,59 @@
 package com.github.braully.domain;
 
+import com.github.braully.util.UtilDate;
+import java.util.Date;
+
 public enum TypePeriod {
-    HORA("Hora", "por Hora"), DIARIO("Diário", "por Dia"), MENSAL("Mensal", "por Mês"),
-    ANUAL("Anual", "por Ano"), SEMESTRAL("Semestral", "por Semestre"),
-    TRIMESTRAL("Trimestral", "por Trimestre"), BIMESTRAL("Trimestral", "por Bimestre");
+    HOURLY, DAILY, MONTHLY, BIMONTHLY,
+    QUARTERLY, SEMESTER, YEARLY;
 
-    String descricao;
-    String periodo;
+    String name;
+    String label;
 
-    private TypePeriod(String descricao, String periodo) {
-        this.descricao = descricao;
-        this.periodo = periodo;
+    TypePeriod() {
+        this.name = name();
+        this.label = name();
+    }
+
+    TypePeriod(String descricao, String periodo) {
+        this.name = descricao;
+        this.label = periodo;
     }
 
     public String getDescricao() {
-        return descricao;
+        return name;
     }
 
     public String getPeriodo() {
-        return periodo;
+        return label;
+    }
+
+    public String getLabel() {
+        return label;
     }
 
     @Override
     public String toString() {
-        return this.descricao;
+        return label;
+    }
+
+    public String getNome() {
+        return name;
+    }
+
+    public long calcularDiferencaPeriodo(Date dateFim, Date dataIni) {
+        long ret = 0;
+        switch (this) {
+            case YEARLY:
+                ret = UtilDate.diferencaAno(dateFim, dataIni);
+                break;
+            case MONTHLY:
+                ret = UtilDate.diferencaMes(dateFim, dataIni);
+                break;
+            case DAILY:
+                ret = UtilDate.diferencaDia(dateFim, dataIni);
+                break;
+        }
+        return ret;
     }
 }

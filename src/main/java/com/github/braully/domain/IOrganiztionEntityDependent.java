@@ -1,7 +1,5 @@
 package com.github.braully.domain;
 
-import com.github.braully.domain.Organization;
-
 /**
  *
  * @author strike

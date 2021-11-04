@@ -24,17 +24,18 @@ import javax.persistence.Transient;
 public class Money implements Serializable, Comparable<MonetaryAmount>, MonetaryAmount {
 
     public static final long FATOR_UNIDADE = 100;
+    /**
+     *
+     */
     public static final Locale REGIAO = new Locale("pt", "BR");
-    public static final Currency MOEDA = Currency.getInstance(REGIAO);
-    public static final DecimalFormatSymbols FORMATADOR_MOEDA_SIMBOLOS = new DecimalFormatSymbols(REGIAO);
-    public static final DecimalFormat FORMATADOR_MOEDA = new DecimalFormat("###,###,##0.00", FORMATADOR_MOEDA_SIMBOLOS);
-    public static final CurrencyUnit CURRENCY_DEFAULT = Monetary.getCurrency("BRL");
+    public static final DecimalFormat DEFAULT_FORMAT = new DecimalFormat("###,###,##0.00");
+    public static final CurrencyUnit DEFAULT_CURRENCY = Monetary.getCurrency("BRL");
 
     /*
      * 
      */
     @Column(name = "valor")
-    protected long valor;
+    protected long value;
     @Transient
     protected MonetaryAmount delegate;
 
@@ -43,8 +44,8 @@ public class Money implements Serializable, Comparable<MonetaryAmount>, Monetary
     }
 
     final void valor(Long valor) {
-        this.valor = valor;
-        delegate = org.javamoney.moneta.Money.of(valor, CURRENCY_DEFAULT);
+        this.value = valor;
+        delegate = org.javamoney.moneta.Money.of(valor, DEFAULT_CURRENCY);
     }
 
     public Money(BigDecimal valorBig) {
@@ -89,11 +90,11 @@ public class Money implements Serializable, Comparable<MonetaryAmount>, Monetary
     }
 
     public long getValor() {
-        return valor;
+        return value;
     }
 
     public void setValor(long valor) {
-        this.valor = valor;
+        this.value = valor;
     }
 
     public Currency getMoeda() {
@@ -105,7 +106,7 @@ public class Money implements Serializable, Comparable<MonetaryAmount>, Monetary
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + (int) (valor ^ (valor >>> 32));
+        result = prime * result + (int) (value ^ (value >>> 32));
         return result;
     }
 
@@ -121,7 +122,7 @@ public class Money implements Serializable, Comparable<MonetaryAmount>, Monetary
             return false;
         }
         Money other = (Money) obj;
-        if (valor != other.valor) {
+        if (value != other.value) {
             return false;
         }
         return true;
@@ -131,20 +132,20 @@ public class Money implements Serializable, Comparable<MonetaryAmount>, Monetary
         if (preco == null) {
             return this;
         }
-        return new Money(preco.valor + this.valor);
+        return new Money(preco.value + this.value);
     }
 
     public Money adiciona(Number big) {
         if (big == null) {
             return this;
         }
-        return new Money(big.longValue() + this.valor);
+        return new Money(big.longValue() + this.value);
     }
 
     public Money subtrai(Money preco) {
         Money res = this;
         if (preco != null) {
-            res = new Money(this.valor - preco.valor);
+            res = new Money(this.value - preco.value);
         }
         return res;
     }
@@ -181,13 +182,13 @@ public class Money implements Serializable, Comparable<MonetaryAmount>, Monetary
 //        }
 //        sb.append(centavos);
 //        return sb.toString();
-        return formatar(valor);
+        return formatar(value);
     }
 
     //TODO: Alterar todos formatadores dessa classe para esse metodo
     public static String formatar(long valor) {
         double val = ((double) valor / FATOR_UNIDADE);
-        return FORMATADOR_MOEDA.format(val);
+        return DEFAULT_FORMAT.format(val);
     }
 
     public static String formatar(BigDecimal total) {
@@ -198,7 +199,7 @@ public class Money implements Serializable, Comparable<MonetaryAmount>, Monetary
     }
 
     public static final Number parserNumber(String valor) throws ParseException {
-        return FORMATADOR_MOEDA.parse(valor);
+        return DEFAULT_FORMAT.parse(valor);
     }
 
     public final void parser(String arg2) {
@@ -206,16 +207,16 @@ public class Money implements Serializable, Comparable<MonetaryAmount>, Monetary
     }
 
     public long getUnidade() {
-        return this.valor / FATOR_UNIDADE;
+        return this.value / FATOR_UNIDADE;
     }
 
     public long getSubUnidade() {
-        return this.valor % FATOR_UNIDADE;
+        return this.value % FATOR_UNIDADE;
     }
 
     public Money multiplica(long escalar) {
         Money res = this;
-        res = new Money(this.valor * escalar);
+        res = new Money(this.value * escalar);
         return res;
     }
 
@@ -249,7 +250,7 @@ public class Money implements Serializable, Comparable<MonetaryAmount>, Monetary
     public Money porcentagem(double descontoPontualidade) {
         Money res = this;
         double fatorDesconto = ((double) descontoPontualidade / (double) 100);
-        long newVal = Math.round((double) this.valor * fatorDesconto);
+        long newVal = Math.round((double) this.value * fatorDesconto);
         res = new Money(newVal);
         return res;
     }
@@ -258,13 +259,13 @@ public class Money implements Serializable, Comparable<MonetaryAmount>, Monetary
     public int compareTo(MonetaryAmount t) {
         int ret = 0;
         if (t != null) {
-            ret = (int) (this.valor - ((Money) t).valor);
+            ret = (int) (this.value - ((Money) t).value);
         }
         return ret;
     }
 
     public Double getValorDouble() {
-        return this.getValorDouble(valor);
+        return this.getValorDouble(value);
     }
 
     public Double getValorDouble(long val) {
@@ -309,14 +310,14 @@ public class Money implements Serializable, Comparable<MonetaryAmount>, Monetary
             if (number instanceof BigDecimal) {
                 value = ((BigDecimal) number).unscaledValue().longValue();
             }
-            return new Money(this.valor - Math.abs(value));
+            return new Money(this.value - Math.abs(value));
         }
         return this;
     }
 
     public Money subtraiValorAbsoluto(Money debito) {
-        if (debito != null && debito.valor != 0) {
-            return new Money(this.valor - Math.abs(debito.valor));
+        if (debito != null && debito.value != 0) {
+            return new Money(this.value - Math.abs(debito.value));
         }
         return this;
     }
@@ -327,21 +328,21 @@ public class Money implements Serializable, Comparable<MonetaryAmount>, Monetary
             if (number instanceof BigDecimal) {
                 value = ((BigDecimal) number).unscaledValue().longValue();
             }
-            return new Money(this.valor + Math.abs(value));
+            return new Money(this.value + Math.abs(value));
         }
         return this;
     }
 
     public Money adicionaValorAbsoluto(Money credito) {
-        if (credito != null && credito.valor != 0) {
-            return new Money(this.valor + Math.abs(credito.valor));
+        if (credito != null && credito.value != 0) {
+            return new Money(this.value + Math.abs(credito.value));
         }
         return this;
     }
 
     public Money divisaoArredondandoTeto(long escalar) {
         Money res = this;
-        long tmpValro = (long) Math.ceil((double) this.valor / escalar);
+        long tmpValro = (long) Math.ceil((double) this.value / escalar);
         res = new Money(tmpValro);
         return res;
     }
@@ -351,8 +352,8 @@ public class Money implements Serializable, Comparable<MonetaryAmount>, Monetary
             throw new IllegalArgumentException("Divisão por zero não é permitida");
         }
         Money[] res = new Money[quantidadeRestante];
-        long tmpValor = this.valor / quantidadeRestante;
-        long restante = this.valor % quantidadeRestante;
+        long tmpValor = this.value / quantidadeRestante;
+        long restante = this.value % quantidadeRestante;
         for (int i = 0; i < quantidadeRestante - 1; i++) {
             res[i] = new Money(tmpValor);
         }
@@ -365,7 +366,7 @@ public class Money implements Serializable, Comparable<MonetaryAmount>, Monetary
     }
 
     public BigDecimal getValorBig() {
-        BigDecimal bigDecimal = new BigDecimal(valor);
+        BigDecimal bigDecimal = new BigDecimal(value);
 //        bigDecimal = bigDecimal.setScale(2, RoundingMode.DOWN);
         bigDecimal = bigDecimal.movePointLeft(2);
         return bigDecimal;
@@ -380,7 +381,7 @@ public class Money implements Serializable, Comparable<MonetaryAmount>, Monetary
 //    }
     @Override
     public boolean isZero() {
-        return valor == 0;
+        return value == 0;
     }
 
     @Override

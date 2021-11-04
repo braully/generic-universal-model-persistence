@@ -19,7 +19,7 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class Inventory extends AbstractEntity implements IOrganiztionEntityDependent, Serializable {
+public class Inventory extends AbstractGlobalEntity implements IOrganiztionEntityDependent, Serializable {
 
     @ManyToOne
     protected Organization organization;
@@ -36,7 +36,6 @@ public class Inventory extends AbstractEntity implements IOrganiztionEntityDepen
     @Basic
     protected String type;
 
-    @Override
     protected String preToString() {
         return name;
     }

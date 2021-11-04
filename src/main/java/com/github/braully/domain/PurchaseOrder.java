@@ -60,7 +60,7 @@ public class PurchaseOrder extends AbstractAuditableEntity
     protected Date dateOrder;
 
     @Basic
-    protected Date dataValidade;
+    protected Date dateExpire;
 
     @Basic
     protected BigDecimal total;

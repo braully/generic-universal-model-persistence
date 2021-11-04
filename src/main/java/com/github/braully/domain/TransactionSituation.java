@@ -5,10 +5,16 @@ package com.github.braully.domain;
  * @author braully
  */
 public enum TransactionSituation {
-    PREVISTO("Previsto"), EXECUTADO("Executado"), VENCIDO("Vencido"), PAGO("Pago"), RECEBIDO("Recebido");
+    PENDING, EXPIRED, 
+    EXECUTED, CANCELED,
+    PAIDOUT("Paid Out"), RECEIVED;
     String descricao;
 
-    private TransactionSituation(String descricao) {
+    TransactionSituation() {
+        this.descricao = name();
+    }
+
+    TransactionSituation(String descricao) {
         this.descricao = descricao;
     }
 

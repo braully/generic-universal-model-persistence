@@ -23,37 +23,33 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
  * @author braullyrocha
  */
+@Getter
+@Setter
 @Entity(name = "TagItem")
-//@Access(AccessType.FIELD)
-@Table(name = "tag_item", schema = "legacy")
+@Table(name = "tag_item", schema = "base")
 public class TagItem extends AbstractEntity implements Serializable {
 
+    protected String name;
     @ManyToOne(fetch = FetchType.LAZY)
-    protected TagItem pai;
-    @OneToMany(mappedBy = "pai", fetch = FetchType.EAGER)
-    protected Set<TagItem> filhos;
+    protected TagItem parent;
+    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
+    protected Set<TagItem> childs;
 
     public TagItem() {
     }
 
     public Set<TagItem> getFilhos() {
-        return filhos;
-    }
-
-    public void setFilhos(Set<TagItem> filhos) {
-        this.filhos = filhos;
+        return childs;
     }
 
     public TagItem getPai() {
-        return pai;
-    }
-
-    public void setPai(TagItem pai) {
-        this.pai = pai;
+        return parent;
     }
 }

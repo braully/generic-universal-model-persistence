@@ -42,7 +42,7 @@ import lombok.Setter;
 public class AccountTransaction extends AbstractMigrableEntity
         implements Serializable, Comparable<AccountTransaction>, IOrganiztionEntityDependent {
 
-    public static final CurrencyUnit CURRENCY_DEFAULT = Money.CURRENCY_DEFAULT;
+    public static final CurrencyUnit CURRENCY_DEFAULT = Money.DEFAULT_CURRENCY;
 
     //    @ManyToOne(targetEntity = Organization.class)
     //    protected Organization organization;
@@ -132,16 +132,16 @@ public class AccountTransaction extends AbstractMigrableEntity
         try {
             if (situation == null) {
                 if (UtilValidation.isNotNull(dateExecuted, valueExecuted)) {
-                    situation = TransactionSituation.EXECUTADO;
+                    situation = TransactionSituation.EXECUTED;
                     if (this.account.isCredit()) {
-                        situation = TransactionSituation.RECEBIDO;
+                        situation = TransactionSituation.RECEIVED;
                     } else if (this.account.isDebit()) {
-                        situation = TransactionSituation.PAGO;
+                        situation = TransactionSituation.PAIDOUT;
                     }
                 } else if (UtilValidation.isNotNull(datePrevist)) {
-                    situation = TransactionSituation.PREVISTO;
+                    situation = TransactionSituation.PENDING;
                     if (UtilDate.isAntesHoje(datePrevist)) {
-                        situation = TransactionSituation.VENCIDO;
+                        situation = TransactionSituation.EXPIRED;
                     }
                 }
             }
