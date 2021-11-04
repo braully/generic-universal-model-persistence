@@ -1,3 +1,26 @@
+/* MIT License
+* 
+* Copyright (c) 2021 Braully Rocha
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included in all
+* copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+* SOFTWARE.
+*/
+
 package com.github.braully.domain;
 
 import com.github.braully.constant.Attr;
@@ -20,13 +43,13 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Where;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+//import org.hibernate.annotations.GenericGenerator;
+//import org.hibernate.annotations.Where;
+//import org.springframework.data.annotation.CreatedBy;
+//import org.springframework.data.annotation.CreatedDate;
+//import org.springframework.data.annotation.LastModifiedBy;
+//import org.springframework.data.annotation.LastModifiedDate;
+//import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
 @Setter
@@ -34,8 +57,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.INTEGER,
         name = "type_id", columnDefinition = "smallint default '0'"
 )
-@Where(clause = "removed = false")
-@EntityListeners(AuditingEntityListener.class)
+//@Where(clause = "removed = false")
+//@EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractEntity
         implements IEntity, Serializable,
         ILightRemoveEntity, IGlobalEntity {
@@ -46,8 +69,8 @@ public abstract class AbstractEntity
 
     @Id
     @GeneratedValue(generator = "snowflawke-id-generator")
-    @GenericGenerator(name = "snowflawke-id-generator",
-            strategy = "com.github.braully.persistence.HibernateSnowflakeIdGenerator")
+//    @GenericGenerator(name = "snowflawke-id-generator",
+//            strategy = "com.github.braully.persistence.HibernateSnowflakeIdGenerator")
     protected Long id;
 
 //    @Attr("hidden")
@@ -66,14 +89,14 @@ public abstract class AbstractEntity
     @Attr("hidden")
     //@Basic
     @Temporal(TemporalType.TIMESTAMP)
-    @CreatedDate
-    @LastModifiedDate
+//    @CreatedDate
+//    @LastModifiedDate
     protected Date lastModifiedDate;
 
     //https://blog.countableset.com/2014/03/08/auditing-spring-data-jpa-java-config/
     @Attr("hidden")
-    @CreatedBy
-    @LastModifiedBy
+//    @CreatedBy
+//    @LastModifiedBy
     /*
     @JoinColumn
     @ManyToOne(fetch = FetchType.LAZY)
