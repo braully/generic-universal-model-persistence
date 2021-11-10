@@ -17,13 +17,16 @@ limitations under the License.
  */
 package io.github.braully;
 
+import javax.sql.DataSource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.Assert;
 
 /**
  *
@@ -31,12 +34,20 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ContextConfiguration(classes = {SpringTestConfig.class})
+@ContextConfiguration(classes = {SpringConfigDBTest.class})
 public class SpringEnvironmentTest {
+
+    @Autowired
+    DataSource datsource;
 
     @Test
     public void testEnvironment() {
         System.out.println("testEnvironment()");
         System.err.println("testEnvironment()");
+    }
+
+    @Test
+    public void testConnection() {
+        Assert.notNull(datsource, "datasource is null");
     }
 }

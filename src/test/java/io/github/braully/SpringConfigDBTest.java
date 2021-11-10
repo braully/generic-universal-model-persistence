@@ -23,10 +23,26 @@
  */
 package io.github.braully;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import javax.sql.DataSource;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+
 /**
  *
  * @author strike
  */
-public class SpringTestConfig {
-    
+@Configuration
+public class SpringConfigDBTest {
+
+    @Primary
+    @Bean
+    @ConfigurationProperties(prefix = "spring.datasource")
+    public DataSource rootDatasource() {
+        return DataSourceBuilder.create().build();
+    }
 }
