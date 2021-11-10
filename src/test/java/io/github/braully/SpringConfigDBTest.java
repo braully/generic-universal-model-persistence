@@ -31,6 +31,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 
 /**
  *
@@ -38,6 +39,7 @@ import org.springframework.test.context.ContextConfiguration;
  */
 @Configuration
 @ContextConfiguration(classes = {DomainConfig.class})
+@TestPropertySource(locations = "classpath:application-test.properties")
 public class SpringConfigDBTest {
 
     @Primary

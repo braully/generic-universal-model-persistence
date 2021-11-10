@@ -32,7 +32,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author strike
  */
 @Configuration
-@EntityScan({"com.github.braully.domain", "com.github.braully.domain.extra"})
+@EntityScan({"com.github.braully.domain", "com.github.braully.domain.*"})
 @EnableTransactionManagement
 public class DomainConfig {
 
