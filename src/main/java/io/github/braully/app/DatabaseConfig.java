@@ -21,24 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package io.github.braully;
+package io.github.braully.app;
 
-import io.github.braully.app.DomainConfig;
 import javax.sql.DataSource;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  *
  * @author strike
  */
 @Configuration
-@ContextConfiguration(classes = {DomainConfig.class})
-public class SpringConfigDBTest {
+@EnableTransactionManagement
+public class DatabaseConfig {
 
     @Primary
     @Bean
