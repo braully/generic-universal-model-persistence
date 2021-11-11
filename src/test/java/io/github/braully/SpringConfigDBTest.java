@@ -23,7 +23,7 @@
  */
 package io.github.braully;
 
-import io.github.braully.app.DomainConfig;
+import io.github.braully.app.DomainJPAConfig;
 import javax.sql.DataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -38,11 +38,10 @@ import org.springframework.test.context.TestPropertySource;
  * @author strike
  */
 @Configuration
-@ContextConfiguration(classes = {DomainConfig.class})
+@ContextConfiguration(classes = {DomainJPAConfig.class})
 @TestPropertySource(locations = "classpath:application-test.properties")
 public class SpringConfigDBTest {
 
-    @Primary
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource rootDatasource() {

@@ -17,11 +17,14 @@ limitations under the License.
  */
 package io.github.braully;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.sql.DataSource;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.util.Assert;
 
 /**
@@ -30,10 +33,13 @@ import org.springframework.util.Assert;
  */
 @SpringBootTest
 @ContextConfiguration(classes = {SpringConfigDBTest.class})
+@EnableTransactionManagement
 public class SpringEnvironmentTest {
 
     @Autowired
     DataSource datsource;
+    @PersistenceContext
+    EntityManager entityManager;
 
     @Test
     public void testEnvironment() {
@@ -42,7 +48,12 @@ public class SpringEnvironmentTest {
     }
 
     @Test
-    public void testConnection() {
+    public void testDbConnection() {
         Assert.notNull(datsource, "datasource is null");
+    }
+
+    @Test
+    public void testJpaEM() {
+        Assert.notNull(entityManager, "entity manager is null");
     }
 }
