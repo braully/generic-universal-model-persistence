@@ -51,6 +51,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  *
@@ -62,7 +63,7 @@ import lombok.Setter;
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.INTEGER, name = "type_id",
         columnDefinition = "smallint default '0'", length = 1)
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 public class ReportTemplate extends AbstractStatusEntity {
 
     //TODO: Migrate to BinaryFile

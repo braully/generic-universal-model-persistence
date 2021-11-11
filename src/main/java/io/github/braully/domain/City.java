@@ -33,10 +33,11 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Entity
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"country", "name", "state"}), schema = "base")
 @DiscriminatorValue("0")
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.INTEGER, name = "type_id",

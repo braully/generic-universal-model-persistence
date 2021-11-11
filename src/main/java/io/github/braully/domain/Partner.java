@@ -22,8 +22,7 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
+ */
 package io.github.braully.domain;
 
 import io.github.braully.persistence.ILightRemoveEntity;
@@ -50,10 +49,12 @@ import static javax.persistence.TemporalType.DATE;
 import javax.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 //import org.apache.commons.lang3.StringUtils;
 //import org.hibernate.annotations.Where;
 
 @Setter
+@Accessors(chain = true)
 @Getter
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(name = "uk_partner.fiscal_code", columnNames = {
@@ -116,6 +117,11 @@ public class Partner extends AbstractGlobalEntity
     public void setName(String name) {
         name = UtilString.capitalize(name);
         this.name = name;
+    }
+
+    @Override
+    public void setUniqueCode(String uniqueCode) {
+        this.uniqueCode = uniqueCode;
     }
 
     public Address getAddress() {

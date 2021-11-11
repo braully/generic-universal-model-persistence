@@ -31,6 +31,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  *
@@ -38,7 +39,7 @@ import lombok.Setter;
  */
 @Entity
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 @Table(uniqueConstraints = @UniqueConstraint(name = "uk_organization_role",
         columnNames = {"fk_role", "fk_organization"}), schema = "base")
 public class OrganizationRole

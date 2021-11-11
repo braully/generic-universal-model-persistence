@@ -36,6 +36,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  *
@@ -44,7 +45,7 @@ import lombok.Setter;
 @Entity
 @Table(schema = "base")
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 public class Contact extends AbstractGlobalEntity implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL)

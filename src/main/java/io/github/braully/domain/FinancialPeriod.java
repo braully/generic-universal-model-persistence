@@ -44,13 +44,14 @@ import java.util.Calendar;
 import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  *
  * @author braully
  */
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 public class FinancialPeriod implements Comparable<FinancialPeriod> {
 
     protected int month;

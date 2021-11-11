@@ -43,6 +43,7 @@ import java.util.Date;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  *
@@ -50,7 +51,7 @@ import lombok.Setter;
  */
 @Entity
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 @Table(schema = "base")
 public class LogEntryError extends AbstractEntity {
 

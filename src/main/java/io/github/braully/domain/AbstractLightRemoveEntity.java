@@ -34,6 +34,7 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 //import org.hibernate.annotations.Where;
 
 @MappedSuperclass
@@ -45,7 +46,7 @@ public abstract class AbstractLightRemoveEntity
     @Basic
     @Column(columnDefinition = "boolean DEFAULT false")
     @Getter
-    @Setter
+    @Setter @Accessors(chain = true)
     protected Boolean removed;
 
     public void toggleRemoved() {
