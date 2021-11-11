@@ -46,11 +46,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Entity
 @Table(schema = "sale")
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 public class PurchaseOrder extends AbstractAuditableEntity
         implements Serializable, IOrganiztionEntityDependent {
 

@@ -49,6 +49,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import io.github.braully.constant.Attr;
 import io.github.braully.constant.Attrs;
 
@@ -58,7 +59,7 @@ import io.github.braully.constant.Attrs;
  * @author braully rocha
  */
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 @Entity
 @Table(schema = "legacy")
 //public class EntityDummy extends AbstractGlobalEntity {

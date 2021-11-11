@@ -33,6 +33,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Entity
 @Table(schema = "sale")
@@ -40,7 +41,7 @@ import lombok.Setter;
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.INTEGER, name = "type_id",
         columnDefinition = "smallint default '0'", length = 1)
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 
 public class Inventory extends AbstractGlobalEntity implements IOrganiztionEntityDependent, Serializable {
 

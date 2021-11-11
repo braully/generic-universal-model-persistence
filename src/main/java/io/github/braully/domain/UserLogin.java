@@ -43,10 +43,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Entity
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 @Table(schema = "security")
 @NamedQueries({
     @NamedQuery(name = "Usuario.userByNome", query = "select u from UserLogin u where u.userName = :nome"),

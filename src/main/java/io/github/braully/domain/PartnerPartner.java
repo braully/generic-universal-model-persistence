@@ -35,6 +35,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Table(schema = "base",
         uniqueConstraints = @UniqueConstraint(name = "uk_partner_partner",
@@ -42,7 +43,7 @@ import lombok.Setter;
 )
 @Entity
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 public class PartnerPartner extends AbstractEntity implements Serializable {
 
     @ManyToOne(targetEntity = Partner.class)

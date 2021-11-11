@@ -33,10 +33,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Entity
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 @Table(schema = "base")
 public class GenericValue extends AbstractEntity implements Serializable {
 

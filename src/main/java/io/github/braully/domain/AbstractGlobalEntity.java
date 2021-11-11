@@ -19,8 +19,7 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
+ */
 package io.github.braully.domain;
 
 import io.github.braully.constant.Attr;
@@ -33,10 +32,12 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 //import org.hibernate.annotations.GenericGenerator;
 
 @Getter
 @Setter
+@Accessors(chain = true)
 @MappedSuperclass
 public abstract class AbstractGlobalEntity
         implements IEntity, Serializable {
@@ -66,6 +67,10 @@ public abstract class AbstractGlobalEntity
     @Basic
     @Attr("hidden")
     protected String uniqueCode;
+
+    public void setUniqueCode(String uniqueCode) {
+        this.uniqueCode = uniqueCode;
+    }
 
     @Override
     public boolean isPersisted() {

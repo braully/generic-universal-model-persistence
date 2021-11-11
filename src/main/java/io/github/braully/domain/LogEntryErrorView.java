@@ -44,6 +44,7 @@ import java.util.Date;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  *
@@ -52,7 +53,7 @@ import lombok.Setter;
 @Entity
 //@Table(name = "vw_log_consolidated", schema = "base")
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 @Table(schema = "base")
 public class LogEntryErrorView implements Serializable {
 

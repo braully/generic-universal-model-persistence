@@ -33,9 +33,10 @@ import javax.persistence.Basic;
 import javax.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 @MappedSuperclass
 public abstract class AbstractExpirableEntity
         extends AbstractEntity implements IEntity, Serializable {

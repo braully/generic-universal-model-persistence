@@ -37,8 +37,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
-@Setter
+@Setter @Accessors(chain = true)
 @Getter
 @Entity
 @Table(name = "menu", schema = "security")

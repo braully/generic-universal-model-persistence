@@ -28,11 +28,12 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Entity
 @Table(schema = "base")
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 public class LocaleSupported extends AbstractEntity {
 
     @Basic

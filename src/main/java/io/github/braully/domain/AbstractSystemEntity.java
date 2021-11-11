@@ -34,9 +34,10 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 @MappedSuperclass
 public abstract class AbstractSystemEntity extends AbstractEntity implements ISystemEntity {
 

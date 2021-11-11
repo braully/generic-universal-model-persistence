@@ -35,9 +35,10 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 @MappedSuperclass
 public abstract class AbstractMigrableEntity extends AbstractEntity implements IEntity, Serializable, IMigrableEntity {
 

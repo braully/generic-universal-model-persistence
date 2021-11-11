@@ -32,10 +32,11 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Entity
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 @Table(schema = "financial")
 public class Budget extends AbstractExpirableEntity implements Serializable {
 

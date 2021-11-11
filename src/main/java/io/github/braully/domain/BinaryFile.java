@@ -46,10 +46,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Entity
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 @Table(schema = "base")
 @DiscriminatorValue("0")
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.INTEGER, name = "type_id",

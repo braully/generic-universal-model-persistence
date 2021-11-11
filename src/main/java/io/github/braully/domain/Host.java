@@ -44,6 +44,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  *
@@ -51,7 +52,7 @@ import lombok.Setter;
  */
 @Entity
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 @Table(schema = "security")
 public class Host extends AbstractStatusEntity {
 

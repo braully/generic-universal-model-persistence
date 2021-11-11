@@ -32,9 +32,10 @@ import javax.persistence.Table;
 import javax.persistence.CascadeType;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(schema = "base")

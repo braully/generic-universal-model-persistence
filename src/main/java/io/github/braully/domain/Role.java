@@ -42,10 +42,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Entity
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 @Table(name = "role", schema = "security")
 //@Access(AccessType.FIELD)
 public class Role extends AbstractGlobalEntity implements Serializable {

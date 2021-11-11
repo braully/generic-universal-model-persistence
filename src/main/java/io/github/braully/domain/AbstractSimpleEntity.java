@@ -35,9 +35,10 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 @MappedSuperclass
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.INTEGER,
         name = "type_id", columnDefinition = "smallint default '0'"

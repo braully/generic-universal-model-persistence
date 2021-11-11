@@ -46,6 +46,7 @@ import java.util.List;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  *
@@ -53,7 +54,7 @@ import lombok.Setter;
  */
 @Entity
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 @Table(name = "bug", schema = "base")
 public class Bug extends AbstractStatusEntity implements Serializable {
 

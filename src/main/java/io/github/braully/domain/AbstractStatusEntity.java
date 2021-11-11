@@ -19,8 +19,7 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
-*/
-
+ */
 package io.github.braully.domain;
 
 import io.github.braully.constant.Attr;
@@ -33,9 +32,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Getter
 @Setter
+@Accessors(chain = true)
 @MappedSuperclass
 public abstract class AbstractStatusEntity extends AbstractEntity
         implements IEntity, IEntityStatus, Serializable {
@@ -45,6 +46,11 @@ public abstract class AbstractStatusEntity extends AbstractEntity
             columnDefinition = "integer default '0'")
     @Enumerated(EnumType.ORDINAL)
     protected Integer status;
+
+    @Override
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     @Override
     public boolean isPersisted() {

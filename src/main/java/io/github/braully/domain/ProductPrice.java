@@ -34,11 +34,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Entity
 @Table(schema = "sale")
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 public class ProductPrice extends AbstractExpirableEntity implements Serializable {
 
     @ManyToOne

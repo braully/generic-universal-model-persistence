@@ -39,9 +39,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Getter
-@Setter
+@Setter @Accessors(chain = true)
 @Entity
 @Table(schema = "base")
 public class Task extends AbstractEntity {
