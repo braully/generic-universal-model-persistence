@@ -23,28 +23,80 @@
  */
 package io.github.braully;
 
+import com.zaxxer.hikari.HikariDataSource;
 import io.github.braully.app.DomainJPAConfig;
+import java.util.Properties;
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  *
  * @author strike
  */
 @Configuration
-@ContextConfiguration(classes = {DomainJPAConfig.class})
-@TestPropertySource(locations = "classpath:application-test.properties")
+@ContextConfiguration(classes = {DomainJPAConfig.class})//, HibernateJpaAutoConfiguration.class})
+@EnableTransactionManagement
+@EnableConfigurationProperties(JpaProperties.class)
 public class SpringConfigDBTest {
 
     @Bean
-    @ConfigurationProperties(prefix = "spring.datasource")
-    public DataSource rootDatasource() {
-        return DataSourceBuilder.create().build();
+    @ConfigurationProperties("spring.datasource")
+    public DataSourceProperties dataSourceProperties() {
+        return new DataSourceProperties();
+    }
+
+    @Bean
+    @ConfigurationProperties("spring.jpa")
+    public JpaProperties jpaProperties() {
+        return new JpaProperties();
+    }
+
+    @Bean
+    @ConfigurationProperties("spring.datasource")
+    public HikariDataSource dataSource(DataSourceProperties properties) {
+        return properties.initializeDataSourceBuilder().type(HikariDataSource.class)
+                .build();
+    }
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, JpaProperties jpaProperties) {
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        vendorAdapter.setGenerateDdl(true);
+        if (jpaProperties.getDatabase() != null) {
+            vendorAdapter.setDatabase(jpaProperties.getDatabase());
+        }
+        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+        factory.setJpaVendorAdapter(vendorAdapter);
+        factory.setPackagesToScan("io.github.braully.domain");
+        Properties properties = new Properties();
+        properties.putAll(jpaProperties.getProperties());
+        factory.setJpaProperties(properties);
+        factory.setDataSource(dataSource);
+        return factory;
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+        JpaTransactionManager txManager = new JpaTransactionManager();
+        txManager.setEntityManagerFactory(entityManagerFactory);
+        return txManager;
+    }
+
+    @Bean
+    public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
+        return new PersistenceExceptionTranslationPostProcessor();
     }
 }

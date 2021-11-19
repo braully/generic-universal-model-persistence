@@ -1,5 +1,7 @@
 package io.github.braully.util;
 
+import java.util.List;
+
 /**
  *
  * @author strike
@@ -201,5 +203,9 @@ public class UtilString {
             ret = str.split("\n");
         }
         return ret;
+    }
+
+    public static String[] splitByCharacterTypeCamelCase(String name) {
+        return name.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
     }
 }

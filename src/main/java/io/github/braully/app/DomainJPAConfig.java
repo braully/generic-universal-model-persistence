@@ -25,35 +25,36 @@ package io.github.braully.app;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import org.hibernate.jpa.HibernatePersistenceProvider;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  *
  * @author strike
  */
+@Configuration
 @EnableTransactionManagement
 /* Hard configuration, for disable lowest DataSourceAutoConfiguration and HibernateJpaAutoConfiguration */
 public class DomainJPAConfig {
 
     public static final String[] ENTITYMANAGER_PACKAGES_TO_SCAN = {"com.github.braully.domain", "com.github.braully.domain.*"};
 
+    @Autowired
+    protected DataSource dataSource;
+
     @Bean
     public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
         return new JpaTransactionManager(emf);
     }
 
-    @ConfigurationProperties(prefix = "spring.jpa")
     @Bean
-    public LocalContainerEntityManagerFactoryBean mySqlEntityManagerFactory(EntityManagerFactoryBuilder builder, DataSource dataSource) {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder) {
         return builder.dataSource(dataSource)
                 .packages(ENTITYMANAGER_PACKAGES_TO_SCAN)
                 .build();
