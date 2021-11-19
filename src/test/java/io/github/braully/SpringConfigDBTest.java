@@ -25,6 +25,7 @@ package io.github.braully;
 
 import com.zaxxer.hikari.HikariDataSource;
 import io.github.braully.app.DomainJPAConfig;
+import io.github.braully.app.MigrationDatabaseConfig;
 import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -47,7 +48,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author strike
  */
 @Configuration
-@ContextConfiguration(classes = {DomainJPAConfig.class})//, HibernateJpaAutoConfiguration.class})
+@ContextConfiguration(classes = {MigrationDatabaseConfig.class, DomainJPAConfig.class})//, HibernateJpaAutoConfiguration.class})
 @EnableTransactionManagement
 @EnableConfigurationProperties(JpaProperties.class)
 public class SpringConfigDBTest {
