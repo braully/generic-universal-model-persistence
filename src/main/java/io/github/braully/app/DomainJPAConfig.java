@@ -23,15 +23,25 @@
  */
 package io.github.braully.app;
 
+import io.github.braully.util.logutil;
+import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import org.flywaydb.core.Flyway;
+import org.flywaydb.core.api.configuration.ClassicConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Primary;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -40,6 +50,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableTransactionManagement
+@EnableConfigurationProperties(JpaProperties.class)
 /* Hard configuration, for disable lowest DataSourceAutoConfiguration and HibernateJpaAutoConfiguration */
 public class DomainJPAConfig {
 
@@ -49,14 +60,57 @@ public class DomainJPAConfig {
     protected DataSource dataSource;
 
     @Bean
-    public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
-        return new JpaTransactionManager(emf);
+    @ConfigurationProperties("spring.jpa")
+    public JpaProperties jpaProperties() {
+        return new JpaProperties();
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder) {
-        return builder.dataSource(dataSource)
-                .packages(ENTITYMANAGER_PACKAGES_TO_SCAN)
-                .build();
+    @Primary
+    public Flyway flyway(DataSource dataSource) {
+        ClassicConfiguration configuration = new ClassicConfiguration();
+        configuration.setDataSource(dataSource);
+        configuration.setOutOfOrder(true);
+        configuration.setValidateOnMigrate(false);
+        configuration.setLocationsAsStrings("classpath:db/migration-schema");
+        Flyway flywaytmp = new Flyway(configuration);
+
+        try {
+            logutil.info("Manual migrate flyway -- pre hibernate ddl ");
+            flywaytmp.migrate();
+        } catch (Exception ex) {
+            logutil.error("Fail on flyway automate", ex);
+        }
+        return flywaytmp;
+    }
+
+    @Bean
+    @DependsOn("flyway")
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, JpaProperties jpaProperties) {
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        vendorAdapter.setGenerateDdl(true);
+        if (jpaProperties.getDatabase() != null) {
+            vendorAdapter.setDatabase(jpaProperties.getDatabase());
+        }
+        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+        factory.setJpaVendorAdapter(vendorAdapter);
+        factory.setPackagesToScan(ENTITYMANAGER_PACKAGES_TO_SCAN);
+        Properties properties = new Properties();
+        properties.putAll(jpaProperties.getProperties());
+        factory.setJpaProperties(properties);
+        factory.setDataSource(dataSource);
+        return factory;
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+        JpaTransactionManager txManager = new JpaTransactionManager();
+        txManager.setEntityManagerFactory(entityManagerFactory);
+        return txManager;
+    }
+
+    @Bean
+    public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
+        return new PersistenceExceptionTranslationPostProcessor();
     }
 }

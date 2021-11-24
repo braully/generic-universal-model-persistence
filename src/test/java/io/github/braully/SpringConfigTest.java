@@ -21,16 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package io.github.braully.app;
+package io.github.braully;
 
-import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
-import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
+import io.github.braully.app.DatabaseConfig;
+import io.github.braully.app.DomainJPAConfig;
+import io.github.braully.app.MigrationDatabaseConfig;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -38,14 +36,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author strike
  */
 @Configuration
-@EnableTransactionManagement
-@EnableConfigurationProperties(DataSourceProperties.class)
-public class DatabaseConfig {
+//@PropertySource("classpath:application-test.properties")
+@Import({DatabaseConfig.class, DomainJPAConfig.class, MigrationDatabaseConfig.class})
+public class SpringConfigTest {
 
-    @Bean
-    @ConfigurationProperties("spring.datasource")
-    public HikariDataSource dataSource(DataSourceProperties properties) {
-        return properties.initializeDataSourceBuilder().type(HikariDataSource.class)
-                .build();
-    }
 }
