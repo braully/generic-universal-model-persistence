@@ -313,4 +313,25 @@ public class DAOJPA {
         entityManager.merge(entity);
     }
 
+    @Transactional
+    public void delete(Object entity) {
+        if (entity instanceof ILightRemoveEntity) {
+            deleteSoft((ILightRemoveEntity) entity);
+        } else if (entity instanceof IEntity) {
+            IEntity tmp = (IEntity) entity;
+            javax.persistence.Query query = entityManager.createQuery("DELETE FROM " + entity.getClass().getSimpleName() + " WHERE id = :id");
+            query.setParameter("id", tmp.getId());
+            int executeUpdate = query.executeUpdate();
+        } else {
+            entityManager.merge(entity);
+            entityManager.remove(entity);
+        }
+    }
+
+    @Transactional
+    public void deleteSoft(ILightRemoveEntity entity) {
+        javax.persistence.Query query = entityManager.createQuery("UPDATE " + entity.getClass().getSimpleName() + " SET removed = True WHERE id = :id");
+        query.setParameter("id", entity.getId());
+        int executeUpdate = query.executeUpdate();
+    }
 }

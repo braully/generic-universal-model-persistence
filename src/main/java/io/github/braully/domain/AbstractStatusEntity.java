@@ -44,7 +44,6 @@ public abstract class AbstractStatusEntity extends AbstractEntity
     @Attr("hidden")
     @Column(name = "status",
             columnDefinition = "integer default '0'")
-    @Enumerated(EnumType.ORDINAL)
     protected Integer status;
 
     @Override

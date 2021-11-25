@@ -19,8 +19,11 @@ package io.github.braully;
 
 import io.github.braully.domain.EntityDummy;
 import io.github.braully.persistence.DAOJPA;
+import io.github.braully.util.UtilCollection;
 import io.github.braully.util.UtilString;
+import io.github.braully.util.UtilValidation;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import org.junit.jupiter.api.Test;
@@ -74,5 +77,16 @@ public class SpringEnvironmentTest {
         System.out.println("Saving: " + dummy);
         dao.save(dummy);
         Assert.notNull(dummy.getId(), "Fail on save dummy, id is null");
+    }
+
+    @Test
+    public void deleteTest() {
+        List<EntityDummy> searched = dao.search(EntityDummy.class);
+        if (UtilValidation.hasData(searched)) {
+            EntityDummy dummy = searched.get(0);
+            System.out.println("Deleting: " + dummy);
+            dao.delete(dummy);
+        }
+
     }
 }
