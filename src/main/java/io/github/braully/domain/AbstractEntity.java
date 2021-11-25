@@ -33,7 +33,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
-import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -43,6 +42,7 @@ import javax.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.GenericGenerator;
 //import org.hibernate.annotations.GenericGenerator;
 //import org.hibernate.annotations.Where;
 //import org.springframework.data.annotation.CreatedBy;
@@ -70,8 +70,9 @@ public abstract class AbstractEntity
 
     @Id
     @GeneratedValue(generator = "snowflawke-id-generator")
-//    @GenericGenerator(name = "snowflawke-id-generator",
-//            strategy = "com.github.braully.persistence.HibernateSnowflakeIdGenerator")
+    //TODO: Transfer for file properties or Convert JPA 
+    @GenericGenerator(name = "snowflawke-id-generator",
+            strategy = "io.github.braully.persistence.HibernateSnowflakeIdGenerator")
     protected Long id;
 
 //    @Attr("hidden")

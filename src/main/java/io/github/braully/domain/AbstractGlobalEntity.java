@@ -33,6 +33,7 @@ import javax.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.GenericGenerator;
 //import org.hibernate.annotations.GenericGenerator;
 
 @Getter
@@ -48,9 +49,10 @@ public abstract class AbstractGlobalEntity
 
     @Id
     //Global generator entity
+    //TODO: Transfer for file properties or Convert JPA 
     @GeneratedValue(generator = "snowflawke-id-generator")
-//    @GenericGenerator(name = "snowflawke-id-generator",
-//            strategy = "com.github.braully.persistence.HibernateSnowflakeIdGenerator")
+    @GenericGenerator(name = "snowflawke-id-generator",
+            strategy = "io.github.braully.persistence.HibernateSnowflakeIdGenerator")
     protected Long id;
 
     @Override
