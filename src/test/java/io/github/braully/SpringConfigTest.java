@@ -26,9 +26,11 @@ package io.github.braully;
 import io.github.braully.app.DatabaseConfig;
 import io.github.braully.app.DomainJPAConfig;
 import io.github.braully.app.MigrationDatabaseConfig;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -37,6 +39,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 //@PropertySource("classpath:application-test.properties")
+@ComponentScan({"io.github.braully"})
+@EnableJpaRepositories(basePackages = {
+    "io.github.braully"
+})
 @Import({DatabaseConfig.class, DomainJPAConfig.class, MigrationDatabaseConfig.class})
 public class SpringConfigTest {
 

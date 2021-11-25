@@ -17,12 +17,17 @@ limitations under the License.
  */
 package io.github.braully;
 
+import io.github.braully.domain.EntityDummy;
+import io.github.braully.persistence.DAOJPA;
+import io.github.braully.util.UtilString;
+import java.util.Date;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.util.Assert;
@@ -32,7 +37,7 @@ import org.springframework.util.Assert;
  * @author braully
  */
 @SpringBootTest
-@ComponentScan({"com.github.braully"})
+@ComponentScan({"io.github.braully"})
 @ContextConfiguration(classes = {SpringConfigTest.class})
 @ActiveProfiles("test")
 public class SpringEnvironmentTest {
@@ -42,10 +47,12 @@ public class SpringEnvironmentTest {
     @Autowired
     EntityManagerFactory entityManagerFactory;
 
+    @Autowired
+    DAOJPA dao;
+
     @Test
     public void testEnvironment() {
         System.out.println("testEnvironment()");
-        System.err.println("testEnvironment()");
     }
 
     @Test
@@ -56,5 +63,16 @@ public class SpringEnvironmentTest {
     @Test
     public void testJpaEM() {
         Assert.notNull(entityManagerFactory, "entity manager is null");
+    }
+
+    @Test
+    public void insertionTest() {
+        EntityDummy dummy = new EntityDummy();
+        dummy.setName(UtilString.random())
+                .setDate(new Date())
+                .setFraction(Math.random());
+        System.out.println("Saving: " + dummy);
+        dao.save(dummy);
+        Assert.notNull(dummy.getId(), "Fail on save dummy, id is null");
     }
 }

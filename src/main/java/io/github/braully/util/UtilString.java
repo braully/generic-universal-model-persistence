@@ -1,6 +1,6 @@
 package io.github.braully.util;
 
-import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -207,5 +207,24 @@ public class UtilString {
 
     public static String[] splitByCharacterTypeCamelCase(String name) {
         return name.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
+    }
+
+    /*
+    Reference: https://www.baeldung.com/java-random-string
+     */
+    public static String random() {
+        int leftLimit = 48; // numeral '0'
+        int rightLimit = 122; // letter 'z'
+        return random(10, leftLimit, rightLimit);
+    }
+
+    public static String random(int length, int leftLimit, int rightLimit) {
+        Random random = new Random();
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(length)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+        return generatedString;
     }
 }

@@ -296,4 +296,21 @@ public class DAOJPA {
         return ret;
     }
 
+    @Transactional
+    public void save(IEntity e) {
+        if (e.isPersisted()) {
+            this.update(e);
+        } else {
+            this.insert(e);
+        }
+    }
+
+    public void insert(Object entity) {
+        entityManager.persist(entity);
+    }
+
+    public void update(Object entity) {
+        entityManager.merge(entity);
+    }
+
 }
