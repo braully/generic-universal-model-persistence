@@ -38,6 +38,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -51,10 +52,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EnableConfigurationProperties(JpaProperties.class)
+@EnableJpaRepositories(basePackages = {"io.github.braully"})
 /* Hard configuration, for disable lowest DataSourceAutoConfiguration and HibernateJpaAutoConfiguration */
 public class DomainJPAConfig {
 
-    public static final String[] ENTITYMANAGER_PACKAGES_TO_SCAN = {"com.github.braully.domain", "com.github.braully.domain.*"};
+    public static final String[] ENTITYMANAGER_PACKAGES_TO_SCAN = {"io.github.braully.domain", "io.github.braully.domain.*"};
 
     @Autowired
     protected DataSource dataSource;

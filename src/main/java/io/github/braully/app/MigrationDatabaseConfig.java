@@ -23,11 +23,11 @@ public class MigrationDatabaseConfig implements ApplicationListener<ApplicationR
             configuration.setDataSource(dataSource);
             configuration.setOutOfOrder(true);
             configuration.setValidateOnMigrate(false);
-            configuration.setLocationsAsStrings("classpath:db/migration-data");
+            configuration.setLocationsAsStrings("classpath:db/migration-schema", "classpath:db/migration-data");
             Flyway flywaytmp = new Flyway(configuration);
             flywaytmp.migrate();
         } catch (Exception ex) {
-            logutil.error("Fail on flyway automate", ex);
+            logutil.debug("Fail on flyway automate", ex);
         }
     }
 
